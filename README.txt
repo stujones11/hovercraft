@@ -9,12 +9,13 @@ Controls
 	Forward (W)	Thrust
 	Jump (Space)	Jump
 	Mouse Move	Rotate
+	Sneak (Shift)	Sit (only visible in multiplayer)
 
 Know Issues
 ===========
 
-'Bouncing' into thin air: This can simply be the result of server lag
-(even in singleplayer). The client and server are out of sync.
+'Bouncing' into thin air: This can simply be the result of server lag,
+even in singleplayer mode, the client and server can get out of sync.
 Solution, be patient, allow the environment to fully load before preceding.
 
 Problems with bouncing in air and generally getting stuck, being pulled
