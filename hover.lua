@@ -138,20 +138,22 @@ function hover:register_hovercraft(name, def)
 				self.thrust = 0
 				minetest.sound_play("hovercraft_bounce", {object = self.object})
 			end
-			self.last_pos = pos	
-			if self.velocity.x > self.deceleration then
-				self.velocity.x = self.velocity.x - self.deceleration
-			elseif self.velocity.x < 0 - self.deceleration then
-				self.velocity.x = self.velocity.x + self.deceleration
-			else
-				self.velocity.x = 0
-			end
-			if self.velocity.z > self.deceleration then
-				self.velocity.z = self.velocity.z - self.deceleration
-			elseif self.velocity.z < 0 - self.deceleration then
-				self.velocity.z = self.velocity.z + self.deceleration
-			else
-				self.velocity.z = 0
+			self.last_pos = pos
+			if self.thrust < 1 then
+				if self.velocity.x > self.deceleration then
+					self.velocity.x = self.velocity.x - self.deceleration
+				elseif self.velocity.x < 0 - self.deceleration then
+					self.velocity.x = self.velocity.x + self.deceleration
+				else
+					self.velocity.x = 0
+				end
+				if self.velocity.z > self.deceleration then
+					self.velocity.z = self.velocity.z - self.deceleration
+				elseif self.velocity.z < 0 - self.deceleration then
+					self.velocity.z = self.velocity.z + self.deceleration
+				else
+					self.velocity.z = 0
+				end
 			end
 			self.object:setvelocity(self.velocity)	
 		end,
