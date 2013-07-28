@@ -12,6 +12,7 @@ function hover:register_hovercraft(name, def)
 		deceleration = def.deceleration,
 		jump_velocity = def.jump_velocity,
 		fall_velocity = def.fall_velocity,
+		bounce = def.bounce,
 		player = nil,
 		sound = nil,
 		thrust = 0,
@@ -19,7 +20,20 @@ function hover:register_hovercraft(name, def)
 		last_pos = {x=0, y=0, z=0},
 		timer = 0,
 		on_activate = function(self, staticdata, dtime_s)
+			self.object:set_armor_groups({immortal=1})
 			self.object:set_animation({x=0, y=24}, 30)
+		end,
+		on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+			if self.player then
+				return
+			end
+			if self.sound then
+				minetest.sound_stop(self.sound)
+			end
+			self.object:remove()
+			if puncher and puncher:is_player() then
+				puncher:get_inventory():add_item("main", name)
+			end
 		end,
 		on_rightclick = function(self, clicker)
 			if not clicker or not clicker:is_player() then
@@ -115,12 +129,12 @@ function hover:register_hovercraft(name, def)
 				self.timer = 0
 			end
 			if self.last_pos.x == pos.x and math.abs(self.velocity.x) > 0.5 then
-				self.velocity.x = self.velocity.x * -0.8
+				self.velocity.x = self.velocity.x * (0 - self.bounce)
 				self.thrust = 0
 				minetest.sound_play("hovercraft_bounce", {object = self.object})
 			end
 			if self.last_pos.z == pos.z and math.abs(self.velocity.z) > 0.5 then
-				self.velocity.z = self.velocity.z * -0.8
+				self.velocity.z = self.velocity.z * (0 - self.bounce)
 				self.thrust = 0
 				minetest.sound_play("hovercraft_bounce", {object = self.object})
 			end
@@ -159,8 +173,8 @@ function hover:register_hovercraft(name, def)
 end
 
 function hover:get_velocity(vx, vy, vz, yaw)
-	local x = math.cos(yaw)*vx+math.cos(math.pi/2+yaw)*vz
-	local z = math.sin(yaw)*vx+math.sin(math.pi/2+yaw)*vz
+	local x = math.cos(yaw) * vx + math.cos(math.pi / 2 + yaw) * vz
+	local z = math.sin(yaw) * vx + math.sin(math.pi / 2 + yaw) * vz
 	return {x=x, y=vy, z=z}
 end
 

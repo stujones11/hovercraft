@@ -9,6 +9,7 @@ hover:register_hovercraft("hovercraft:hover_red" ,{
 	deceleration = 0.025,
 	jump_velocity = 4.0,
 	fall_velocity = 1.0,
+	bounce = 0.5,
 })
 
 hover:register_hovercraft("hovercraft:hover_blue" ,{
@@ -20,5 +21,6 @@ hover:register_hovercraft("hovercraft:hover_blue" ,{
 	deceleration = 0.05,
 	jump_velocity = 4,
 	fall_velocity = 1,
+	bounce = 0.8,
 })
 
