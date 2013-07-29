@@ -79,14 +79,14 @@ function hover:register_hovercraft(name, def)
 						self.thrust = self.thrust + self.acceleration
 					end
 					local velocity = hover:get_velocity(self.thrust, self.velocity.y, 0, yaw)
-					if velocity.x < self.velocity.x - self.acceleration then
+					if velocity.x <= self.velocity.x - self.acceleration then
 						self.velocity.x = self.velocity.x - self.acceleration
-					elseif velocity.x > self.velocity.x + self.acceleration then
+					elseif velocity.x >= self.velocity.x + self.acceleration then
 						self.velocity.x = self.velocity.x + self.acceleration
 					end
-					if velocity.z < self.velocity.z - self.acceleration then
+					if velocity.z <= self.velocity.z - self.acceleration then
 						self.velocity.z = self.velocity.z - self.acceleration
-					elseif velocity.z > self.velocity.z + self.acceleration then
+					elseif velocity.z >= self.velocity.z + self.acceleration then
 						self.velocity.z = self.velocity.z + self.acceleration
 					end
 					if not self.sound then
