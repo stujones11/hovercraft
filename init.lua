@@ -30,8 +30,8 @@ hover:register_hovercraft("hovercraft:hover_green" ,{
 	inventory_image = "hovercraft_green_inv.png",
 	max_speed = 8,
 	acceleration = 0.25,
-	deceleration = 0.25,
-	jump_velocity = 5.0,
+	deceleration = 0.15,
+	jump_velocity = 5.5,
 	fall_velocity = 1.5,
 	bounce = 0.5,
 })
@@ -47,3 +47,4 @@ hover:register_hovercraft("hovercraft:hover_yellow" ,{
 	fall_velocity = 0.5,
 	bounce = 0.25,
 })
+
