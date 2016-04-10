@@ -62,7 +62,7 @@ function hover:register_hovercraft(name, def)
 				minetest.sound_play("hovercraft_jump", {object = self.object})
 				self.object:set_animation({x=0, y=0})
 			end
-			self.last_pos = pos
+			self.last_pos = vector.new(pos)
 			self.object:setpos(pos)
 		end,
 		on_step = function(self, dtime)
@@ -138,7 +138,7 @@ function hover:register_hovercraft(name, def)
 				self.thrust = 0
 				minetest.sound_play("hovercraft_bounce", {object = self.object})
 			end
-			self.last_pos = pos
+			self.last_pos = vector.new(pos)
 			if self.thrust < 1 then
 				if self.velocity.x > self.deceleration then
 					self.velocity.x = self.velocity.x - self.deceleration
