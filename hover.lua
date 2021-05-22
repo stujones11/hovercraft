@@ -39,7 +39,7 @@ function hover:register_hovercraft(name, def)
 			if not clicker or not clicker:is_player() then
 				return
 			end
-			local pos = self.object:getpos()
+			local pos = self.object:get_pos()
 			if self.player and clicker == self.player then
 				if self.sound then					
 					minetest.sound_stop(self.sound)
@@ -55,24 +55,24 @@ function hover:register_hovercraft(name, def)
 				self.player = clicker
 				clicker:set_attach(self.object, "", {x=-2,y=16.5,z=0}, {x=0,y=90,z=0})
 				clicker:set_animation({x=81, y=81})
-				local yaw = clicker:get_look_yaw()
-				self.object:setyaw(yaw)
+				local yaw = clicker:get_look_horizontal()
+				self.object:set_yaw(yaw)
 				self.yaw = yaw
 				pos.y = pos.y + 0.5
 				minetest.sound_play("hovercraft_jump", {object = self.object})
 				self.object:set_animation({x=0, y=0})
 			end
 			self.last_pos = vector.new(pos)
-			self.object:setpos(pos)
+			self.object:set_pos(pos)
 		end,
 		on_step = function(self, dtime)
 			self.timer = self.timer + dtime
 			if self.player then
-				local yaw = self.player:get_look_yaw()
+				local yaw = self.player:get_look_horizontal()
 				if not yaw then
 					return
 				end
-				self.object:setyaw(yaw)
+				self.object:set_yaw(yaw)
 				local ctrl = self.player:get_player_control()
 				if ctrl.up then
 					if self.thrust < self.max_speed then
@@ -116,7 +116,7 @@ function hover:register_hovercraft(name, def)
 					self.player:set_animation({x=81, y=81})
 				end
 			end
-			local pos = self.object:getpos()
+			local pos = self.object:get_pos()
 			if self.timer > 0.5 then
 				local node = minetest.get_node({x=pos.x, y=pos.y-0.5, z=pos.z})
 				if node.name == "air" or node.name == "ignore" then
@@ -124,7 +124,7 @@ function hover:register_hovercraft(name, def)
 				else
 					self.velocity.y = 0
 					pos.y = math.floor(pos.y) + 0.5
-					self.object:setpos(pos)
+					self.object:set_pos(pos)
 				end
 				self.timer = 0
 			end
@@ -155,7 +155,7 @@ function hover:register_hovercraft(name, def)
 					self.velocity.z = 0
 				end
 			end
-			self.object:setvelocity(self.velocity)	
+			self.object:set_velocity(self.velocity)	
 		end,
 	})
 	minetest.register_craftitem(name, {
