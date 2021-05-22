@@ -41,7 +41,7 @@ function hover:register_hovercraft(name, def)
 			end
 			local pos = self.object:get_pos()
 			if self.player and clicker == self.player then
-				if self.sound then					
+				if self.sound then
 					minetest.sound_stop(self.sound)
 					minetest.sound_play("hovercraft_thrust_fade", {object = self.object})
 					self.sound = nil
@@ -111,7 +111,7 @@ function hover:register_hovercraft(name, def)
 					self.velocity.y = self.jump_velocity
 					self.timer = 0
 					minetest.sound_play("hovercraft_jump", {object = self.object})
-				end	
+				end
 				if ctrl.sneak then
 					self.player:set_animation({x=81, y=81})
 				end
@@ -155,13 +155,13 @@ function hover:register_hovercraft(name, def)
 					self.velocity.z = 0
 				end
 			end
-			self.object:set_velocity(self.velocity)	
+			self.object:set_velocity(self.velocity)
 		end,
 	})
 	minetest.register_craftitem(name, {
 		description = def.description,
 		inventory_image = def.inventory_image,
-		liquids_pointable = true,	
+		liquids_pointable = true,
 		on_place = function(itemstack, placer, pointed_thing)
 			if pointed_thing.type ~= "node" then
 				return
