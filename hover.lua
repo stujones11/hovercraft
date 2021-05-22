@@ -53,7 +53,13 @@ function hover:register_hovercraft(name, def)
 				clicker:set_detach()
 			elseif not self.player then
 				self.player = clicker
-				clicker:set_attach(self.object, "", {x=-2,y=16.5,z=0}, {x=0,y=90,z=0})
+
+				local attach_y = 16.5
+				if core.features.object_independent_selectionbox then
+					attach_y = 5.75
+				end
+
+				clicker:set_attach(self.object, "", {x=-2,y=attach_y,z=0}, {x=0,y=90,z=0})
 				clicker:set_animation({x=81, y=81})
 				local yaw = clicker:get_look_horizontal()
 				self.object:set_yaw(yaw)
@@ -68,7 +74,11 @@ function hover:register_hovercraft(name, def)
 		on_step = function(self, dtime)
 			self.timer = self.timer + dtime
 			if self.player then
-				local yaw = self.player:get_look_horizontal()
+				local yaw = nil
+				local p_look = self.player:get_look_horizontal()
+				if p_look then
+					yaw = p_look + math.rad(90)
+				end
 				if not yaw then
 					return
 				end
