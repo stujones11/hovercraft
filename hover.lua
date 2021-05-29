@@ -24,16 +24,25 @@ function hover:register_hovercraft(name, def)
 			self.object:set_animation({x=0, y=24}, 30)
 		end,
 		on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+			if not puncher or not puncher:is_player() then return end
+
 			if self.player then
 				return
 			end
+
+			local pname = puncher:get_player_name()
+			local stack = ItemStack(name)
+			local pinv = puncher:get_inventory()
+			if not pinv:room_for_item("main", stack) then
+				minetest.chat_send_player(pname, "You don't have room in your inventory.")
+				return
+			end
+
 			if self.sound then
 				minetest.sound_stop(self.sound)
 			end
 			self.object:remove()
-			if puncher and puncher:is_player() then
-				puncher:get_inventory():add_item("main", name)
-			end
+			pinv:add_item("main", stack)
 		end,
 		on_rightclick = function(self, clicker)
 			if not clicker or not clicker:is_player() then
