@@ -23,7 +23,9 @@ function hover:register_hovercraft(name, def)
 			self.object:set_animation({x=0, y=24}, 30)
 
 			local sdata = minetest.deserialize(staticdata)
-			self.owner = sdata.owner
+			if sdata then
+				self.owner = sdata.owner
+			end
 		end,
 		on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
 			if not puncher or not puncher:is_player() then return end
